@@ -1,18 +1,25 @@
-# knapsack_problem
-Made in 2018 (school project) using Python and Tkinter (Python binding to the Tk GUI toolkit).
-Showcases 2 algorithms (greedy and recursive) solving the knapsack problem (Problem in combinatorial optimization).
+# TkKnapsack
 
-Poor performance for recursion using more than nine nodes.
-Ugly interface.
+## Releases
 
-## Window on launch
-![](./markdownImages/window.png)
+- [0.1.0](https://github.com/loulct/TkKnapsack/releases/tag/0.1.0)
 
-## Generating Nodes
-![](./markdownImages/generate_nodes.png)
+## Install Dependencies
 
-## Greedy algorithm output
-![](./markdownImages/greedy_output.png)
+Install [uv](https://docs.astral.sh/uv/#installation).
 
-## Recursive algorithm output and graph displayed
-![](./markdownImages/graph.png)
+Then run the command below to read the lockfile, create the virtual environment and install required dependencies.
+```
+uv sync
+```
+
+Run program using the command below.
+```
+uv run python -m src
+```
+
+## Build
+
+```
+./build.sh
+```
