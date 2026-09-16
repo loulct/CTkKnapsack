@@ -15,7 +15,7 @@ uv sync
 
 Run program using the command below.
 ```
-uv run python -m src
+uv run tkknapsack
 ```
 
 ## Build

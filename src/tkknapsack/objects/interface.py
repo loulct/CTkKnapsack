@@ -88,7 +88,7 @@ class Interface(Frame):
         self.taille = 0.58  # height of branches
 
         self.canvas = Canvas(window, width=self.large, height=self.height, bg="white")
-        self.canvas.grid(row=1, rowspan=11, column=4)
+        self.canvas.grid(row=1, rowspan=11, column=5)
 
         self.display = Label(window, text="Value")
         self.display.grid(row=10, column=1)
