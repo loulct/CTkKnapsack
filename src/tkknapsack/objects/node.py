@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, weight: float, value: float):
+    def __init__(self, weight: float, value: float) -> None:
         """
         @type weight:float
         @type value:float

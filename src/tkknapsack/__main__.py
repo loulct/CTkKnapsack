@@ -1,6 +1,6 @@
-from tkinter import *
+from tkinter import Tk
 
-from src.objects.interface import Interface
+from tkknapsack.objects.interface import Interface
 
 window = Tk()
 window.title("Knapsack Problem")

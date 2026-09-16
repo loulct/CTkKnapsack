@@ -9,9 +9,9 @@ except ImportError:
 else:
     sortkey = operator.attrgetter("value_per_weight")
 
-from algorithms.greedy import greedy
-from algorithms.not_greedy import not_greedy
-from objects.node import Node
+from tkknapsack.algorithms.greedy import greedy
+from tkknapsack.algorithms.not_greedy import not_greedy
+from tkknapsack.objects.node import Node
 
 
 class Interface(Frame):

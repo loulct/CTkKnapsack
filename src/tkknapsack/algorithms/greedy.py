@@ -1,4 +1,4 @@
-from src.objects.node import Node
+from tkknapsack.objects.node import Node
 
 
 def greedy(capacity: float, nodeList: list[Node]) -> float:
