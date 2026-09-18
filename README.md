@@ -15,7 +15,7 @@ uv sync
 
 Run program using the command below.
 ```
-uv run tkknapsack
+uv run ctkknapsack
 ```
 
 ## Build
