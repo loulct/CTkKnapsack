@@ -304,6 +304,9 @@ class Interface(CTk):
 
             self.drawLine(x1, y1, x2, y2, color)
 
+            if len(self.path) < 1:
+                return
+
             if self.path[depth] == 1:
                 self.drawBranch(
                     depth,
@@ -350,6 +353,10 @@ class Interface(CTk):
             y2 = y1 - int(sin(angle) * length)
 
             self.drawLine(x1, y1, x2, y2, "blue")
+
+            if len(self.path) < 1:
+                return
+
             if self.path[depth] == 1:
                 self.drawPath(depth, x2, y2, length * self.taille, angle + self.angle)
             else:
