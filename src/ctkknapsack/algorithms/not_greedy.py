@@ -1,9 +1,7 @@
-from tkknapsack.objects.node import Node
+from ctkknapsack.objects.node import Node
 
 
-def not_greedy(
-    capacity: float, nodeList: list[Node]
-) -> tuple[float, list[Node], list] | None:
+def not_greedy(capacity: float, nodeList: list[Node]) -> tuple[float, list[Node], list]:
     """
     @type capacity:float
     @type nodeList:list[node.Node]
@@ -12,7 +10,7 @@ def not_greedy(
     """
 
     if len(nodeList) > 9:
-        return None
+        return (0, [], [])
 
     switchList = swap(nodeList)
     temp = calculatePath(capacity, switchList[0])
@@ -24,7 +22,7 @@ def not_greedy(
     return temp
 
 
-def swap(nodeList: list[Node]) -> list[list[Node]] | None:
+def swap(nodeList: list[Node]) -> list[list[Node]]:
     """
     @type nodeList:list[node.Node]
 
@@ -33,7 +31,7 @@ def swap(nodeList: list[Node]) -> list[list[Node]] | None:
     switchList = []
 
     if len(nodeList) == 0:
-        return None
+        return []
 
     if len(nodeList) == 1:
         switchList = [nodeList]
