@@ -7,4 +7,4 @@ class Node:
 
         self.weight = weight
         self.value = value
-        self.value_per_weight = value / weight
+        self.ratio = value / weight

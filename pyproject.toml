@@ -1,5 +1,5 @@
 [project]
-name = "tkknapsack"
+name = "ctkknapsack"
 version = "0.1.0"
 description = "Showcases two algorithms solving the knapsack problem."
 readme = "README.md"
@@ -7,10 +7,12 @@ authors = [
     { name = "loulct", email = "lecart-louis@orange.fr" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "customtkinter>=6.0.0",
+]
 
 [project.scripts]
-tkknapsack = "tkknapsack:main"
+ctkknapsack = "ctkknapsack:main"
 
 [build-system]
 requires = ["uv_build>=0.12.15,<0.13.0"]
