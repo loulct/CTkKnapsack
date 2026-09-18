@@ -1,8 +1,8 @@
-# TkKnapsack
+# CTkKnapsack
 
 ## Releases
 
-- [0.1.0](https://github.com/loulct/TkKnapsack/releases/tag/0.1.0)
+- [0.1.0](https://github.com/loulct/CTkKnapsack/releases/tag/0.1.0)
 
 ## Install Dependencies
 
