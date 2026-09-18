@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Knapsack Problem
+Exec=CTkKnapsack
+Icon=ctkknapsack
+Categories=Utility;
