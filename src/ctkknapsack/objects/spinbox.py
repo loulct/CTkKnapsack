@@ -3,7 +3,7 @@ from collections.abc import Callable
 from customtkinter import CTkButton, CTkEntry, CTkFrame
 
 
-class CustomSpinbox(CTkFrame):
+class CTkSpinbox(CTkFrame):
     def __init__(
         self,
         *args,

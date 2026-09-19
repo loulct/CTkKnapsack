@@ -1,7 +1,7 @@
 from customtkinter import CTk, CTkFrame, CTkLabel, CTkSlider, IntVar
 
 
-class DoubleSlider(CTkFrame):
+class CTkDoubleSlider(CTkFrame):
     def __init__(
         self,
         parent: CTk,

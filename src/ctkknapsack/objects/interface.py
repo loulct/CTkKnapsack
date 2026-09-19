@@ -13,7 +13,7 @@ from customtkinter import (
     IntVar,
 )
 
-from ctkknapsack.objects.spinbox import CustomSpinbox
+from ctkknapsack.objects.spinbox import CTkSpinbox
 
 try:
     import operator
@@ -86,12 +86,12 @@ class Interface(CTk):
         self.result.grid(row=0, column=1)
 
         CTkLabel(self, text="Capacity").grid(row=2, column=1)
-        self.capacity = CustomSpinbox(self, width=200)
+        self.capacity = CTkSpinbox(self, width=200)
         self.capacity.set(100)
         self.capacity.grid(row=2, column=2)
 
         CTkLabel(self, text="Node count").grid(row=3, column=1)
-        self.nodes = CustomSpinbox(self, width=200)
+        self.nodes = CTkSpinbox(self, width=200)
         self.nodes.set(5)
         self.nodes.grid(row=3, column=2)
 
