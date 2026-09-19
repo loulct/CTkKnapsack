@@ -1,7 +1,8 @@
 from math import cos, pi, sin
 from random import uniform
-from tkinter.ttk import Style, Treeview
+from tkinter.ttk import Treeview
 
+from cttknapsack.style.treeview import TreeviewStyle
 from customtkinter import (
     CTk,
     CTkButton,
@@ -36,44 +37,7 @@ class Interface(CTk):
 
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-        style = Style()
-        style.theme_use("clam")
-
-        bg_color = "#2b2b2b"
-        text_color = "#ffffff"
-        selected_color = "#1f6aa5"
-        header_bg = "#343638"
-
-        style.configure(
-            "Treeview",
-            background=bg_color,
-            foreground=text_color,
-            fieldbackground=bg_color,
-            rowheight=35,
-            font=("Segoe UI", 10),
-            borderwidth=0,
-        )
-
-        style.map(
-            "Treeview",
-            background=[("selected", selected_color)],
-            foreground=[("selected", "#ffffff")],
-        )
-
-        style.configure(
-            "Treeview.Heading",
-            background=header_bg,
-            foreground=text_color,
-            font=("Segoe UI", 10, "bold"),
-            borderwidth=0,
-            relief="flat",
-        )
-
-        style.map(
-            "Treeview.Heading",
-            background=[("active", header_bg)],
-            foreground=[("active", text_color)],
-        )
+        TreeviewStyle()
 
         self.final_value = 0
         self.list = []
