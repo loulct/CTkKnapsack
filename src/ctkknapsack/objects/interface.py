@@ -151,15 +151,15 @@ class Interface(CTk):
         self.value_slider_max.grid(row=1, column=0)
 
         self.create_nodes = CTkButton(
-            self, text="Create nodes", command=self.generateNode
+            self, text="Create nodes", command=self.create_nodes
         )
         self.create_nodes.grid(row=8, column=1)
         self.launch_greedy = CTkButton(
-            self, text="Greedy Algorithm", command=self.launchGreedy
+            self, text="Greedy Algorithm", command=self.run_greedy
         )
         self.launch_greedy.grid(row=8, column=2)
         self.launch_not_greedy = CTkButton(
-            self, text="Not Greedy Algorithm", command=self.launchNotGreedy
+            self, text="Not Greedy Algorithm", command=self.run_not_greedy
         )
         self.launch_not_greedy.grid(row=8, column=3)
 
@@ -219,15 +219,15 @@ class Interface(CTk):
             text=f"Weight range: {self.min_weight.get()} - {self.max_weight.get()}"
         )
 
-    def launchGreedy(self) -> None:
-        """ """
+    def run_greedy(self) -> None:
+        """Run Greedy algorithm."""
         self.final_value = greedy(
             float(self.capacity.get()), sorted(self.list, key=sortkey, reverse=True)
         )
         self.result.configure(text=self.final_value)
 
-    def launchNotGreedy(self) -> None:
-        """ """
+    def run_not_greedy(self) -> None:
+        """Run recursive algorithm exploring every permutation."""
         self.final_value = not_greedy(float(self.capacity.get()), self.list)
         self.path = self.final_value[2]
         self.result.configure(text=self.final_value[0])
@@ -235,7 +235,7 @@ class Interface(CTk):
         self.canvas.delete("all")
         depth = len(self.list)
 
-        self.drawBranch(
+        self.draw_branch(
             depth,
             self.large / 2,
             self.height,
@@ -243,29 +243,31 @@ class Interface(CTk):
             pi / 2,
             color="black",
         )
-        self.drawPath(depth, self.large / 2, self.height, self.height / 3, pi / 2)
+        self.draw_path(depth, self.large / 2, self.height, self.height / 3, pi / 2)
 
-        rang = len(self.final_value[1])
+        rank = len(self.final_value[1])
         self.clear_table()
         for node in self.final_value[1]:
             self.table.insert(
-                "", "end", values=(node.value, node.weight, node.ratio, rang)
+                "", "end", values=(node.value, node.weight, node.ratio, rank)
             )
-            rang -= 1
+            rank -= 1
 
-    def generateNode(self) -> None:
-        """ """
+    def create_nodes(self) -> None:
+        """
+        Creates nodes.
+        """
         self.canvas.delete("all")
-        nodeList = []
+        nodes = []
 
         for index in range(int(self.nodes.get())):
-            unique_node = Node(
+            node = Node(
                 uniform(float(self.min_weight.get()), float(self.max_weight.get())),
                 uniform(float(self.min_value.get()), float(self.max_value.get())),
             )
-            nodeList.append(unique_node)
+            nodes.append(node)
 
-        self.list = sorted(nodeList, key=sortkey, reverse=True)
+        self.list = sorted(nodes, key=sortkey, reverse=True)
 
         self.clear_table()
         for node in self.list:
@@ -273,10 +275,10 @@ class Interface(CTk):
 
     def clear_table(self):
         if self.table.get_children():
-            for item in self.table.get_children():
-                self.table.delete(item)
+            for node in self.table.get_children():
+                self.table.delete(node)
 
-    def drawLine(self, x1: float, y1: float, x2: float, y2: float, color: str) -> None:
+    def draw_line(self, x1: float, y1: float, x2: float, y2: float, color: str) -> None:
         """
         @type x1:float
         @type y1:float
@@ -286,7 +288,7 @@ class Interface(CTk):
         """
         self.canvas.create_line(x1, y1, x2, y2, fill=color, tags="line")
 
-    def drawBranch(
+    def draw_branch(
         self, depth: int, x1: float, y1: float, length: float, angle: float, color: str
     ) -> None:
         """
@@ -302,13 +304,13 @@ class Interface(CTk):
             x2 = x1 + int(cos(angle) * length)
             y2 = y1 - int(sin(angle) * length)
 
-            self.drawLine(x1, y1, x2, y2, color)
+            self.draw_line(x1, y1, x2, y2, color)
 
             if len(self.path) < 1:
                 return
 
             if self.path[depth] == 1:
-                self.drawBranch(
+                self.draw_branch(
                     depth,
                     x2,
                     y2,
@@ -316,11 +318,11 @@ class Interface(CTk):
                     angle + self.angle,
                     color="green",
                 )
-                self.drawBranch(
+                self.draw_branch(
                     depth, x2, y2, length * self.taille, angle - self.angle, color="red"
                 )
             else:
-                self.drawBranch(
+                self.draw_branch(
                     depth,
                     x2,
                     y2,
@@ -328,7 +330,7 @@ class Interface(CTk):
                     angle + self.angle,
                     color="green",
                 )
-                self.drawBranch(
+                self.draw_branch(
                     depth, x2, y2, length * self.taille, angle - self.angle, color="red"
                 )
 
@@ -337,7 +339,7 @@ class Interface(CTk):
                     x2, y2, text=(len(self.list) - depth - 1), fill="black"
                 )
 
-    def drawPath(
+    def draw_path(
         self, depth: int, x1: float, y1: float, length: float, angle: float
     ) -> None:
         """
@@ -352,12 +354,12 @@ class Interface(CTk):
             x2 = x1 + int(cos(angle) * length)
             y2 = y1 - int(sin(angle) * length)
 
-            self.drawLine(x1, y1, x2, y2, "blue")
+            self.draw_line(x1, y1, x2, y2, "blue")
 
             if len(self.path) < 1:
                 return
 
             if self.path[depth] == 1:
-                self.drawPath(depth, x2, y2, length * self.taille, angle + self.angle)
+                self.draw_path(depth, x2, y2, length * self.taille, angle + self.angle)
             else:
-                self.drawPath(depth, x2, y2, length * self.taille, angle - self.angle)
+                self.draw_path(depth, x2, y2, length * self.taille, angle - self.angle)
