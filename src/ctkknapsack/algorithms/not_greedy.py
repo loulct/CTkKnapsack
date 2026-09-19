@@ -1,62 +1,62 @@
 from ctkknapsack.objects.node import Node
 
 
-def not_greedy(capacity: float, nodeList: list[Node]) -> tuple[float, list[Node], list]:
+def not_greedy(capacity: float, nodes: list[Node]) -> tuple[float, list[Node], list]:
     """
     @type capacity:float
-    @type nodeList:list[node.Node]
+    @type nodes:list[node.Node]
 
     Returns a tuple with best value and path.
     """
 
-    if len(nodeList) > 9:
+    if len(nodes) > 9:
         return (0, [], [])
 
-    switchList = swap(nodeList)
-    temp = calculatePath(capacity, switchList[0] if len(switchList) > 0 else [])
+    switch_list = swap(nodes)
+    temp = calculate_path(capacity, switch_list[0] if len(switch_list) > 0 else [])
 
-    for path in switchList:
-        if calculatePath(capacity, path)[0] > temp[0]:
-            temp = calculatePath(capacity, path)
+    for path in switch_list:
+        if calculate_path(capacity, path)[0] > temp[0]:
+            temp = calculate_path(capacity, path)
 
     return temp
 
 
-def swap(nodeList: list[Node]) -> list[list[Node]]:
+def swap(nodes: list[Node]) -> list[list[Node]]:
     """
-    @type nodeList:list[node.Node]
+    @type nodes:list[node.Node]
 
-    Returns list of every possible swap outcome as switchList:list[list[node.Node]] or None.
+    Returns list of every possible swap outcome as switch_list:list[list[node.Node]].
     """
-    switchList = []
+    switch_list = []
 
-    if len(nodeList) == 0:
+    if len(nodes) == 0:
         return []
 
-    if len(nodeList) == 1:
-        switchList = [nodeList]
+    if len(nodes) == 1:
+        switch_list = [nodes]
     else:
-        for index in range(len(nodeList)):
-            permutation = swap(nodeList[0:index] + nodeList[index + 1 : len(nodeList)])
+        for index in range(len(nodes)):
+            permutation = swap(nodes[0:index] + nodes[index + 1 : len(nodes)])
             for node in permutation:
-                switchList.append([nodeList[index]] + node)
+                switch_list.append([nodes[index]] + node)
 
-    return switchList
+    return switch_list
 
 
-def calculatePath(
-    capacity: float, nodeList: list[Node]
+def calculate_path(
+    capacity: float, nodes: list[Node]
 ) -> tuple[float, list[Node], list]:
     """
-    @type nodeList:list[node.Node]
+    @type nodes:list[node.Node]
 
-    Returns a tuple[value:float | Literal[0], nodeList:list[node.Node], path:list]
+    Returns a tuple[value:float | Literal[0], nodes:list[node.Node], path:list]
     """
     result = (0, [], [])
     value = 0
     path = []
 
-    for node in nodeList:
+    for node in nodes:
         if node.weight < capacity:
             capacity -= node.weight
             value += node.value
@@ -64,5 +64,5 @@ def calculatePath(
         else:
             path.append(0)
 
-    result = (value, nodeList, path)
+    result = (value, nodes, path)
     return result
