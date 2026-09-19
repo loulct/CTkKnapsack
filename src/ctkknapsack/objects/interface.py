@@ -2,6 +2,7 @@ from math import cos, pi, sin
 from random import uniform
 from tkinter.ttk import Style, Treeview
 
+from cttknapsack.objects.double_slider import CTkDoubleSlider
 from customtkinter import (
     CTk,
     CTkButton,
@@ -9,11 +10,9 @@ from customtkinter import (
     CTkFrame,
     CTkLabel,
     CTkScrollbar,
-    CTkSlider,
-    IntVar,
 )
 
-from ctkknapsack.objects.spinbox import CustomSpinbox
+from ctkknapsack.objects.spinbox import CTkSpinbox
 
 try:
     import operator
@@ -86,69 +85,17 @@ class Interface(CTk):
         self.result.grid(row=0, column=1)
 
         CTkLabel(self, text="Capacity").grid(row=2, column=1)
-        self.capacity = CustomSpinbox(self, width=200)
+        self.capacity = CTkSpinbox(self, width=200)
         self.capacity.set(100)
         self.capacity.grid(row=2, column=2)
 
         CTkLabel(self, text="Node count").grid(row=3, column=1)
-        self.nodes = CustomSpinbox(self, width=200)
+        self.nodes = CTkSpinbox(self, width=200)
         self.nodes.set(5)
         self.nodes.grid(row=3, column=2)
 
-        self.min_weight = IntVar(value=10)
-        self.max_weight = IntVar(value=100)
-
-        slider_container = CTkFrame(self)
-        slider_container.grid(row=4, column=2)
-        self.weight_label = CTkLabel(
-            self,
-            text=f"Weight range: {self.min_weight.get()} - {self.max_weight.get()}",
-        )
-        self.weight_label.grid(row=4, column=1)
-
-        self.weight_slider_min = CTkSlider(
-            slider_container,
-            from_=0,
-            to=100,
-            variable=self.min_weight,
-            command=self.update_min_weight,
-        )
-        self.weight_slider_min.grid(row=0, column=0)
-        self.weight_slider_max = CTkSlider(
-            slider_container,
-            from_=0,
-            to=100,
-            variable=self.max_weight,
-            command=self.update_max_weight,
-        )
-        self.weight_slider_max.grid(row=1, column=0)
-
-        self.min_value = IntVar(value=10)
-        self.max_value = IntVar(value=100)
-
-        slider_container = CTkFrame(self)
-        slider_container.grid(row=5, column=2)
-        self.value_label = CTkLabel(
-            self, text=f"Value range: {self.min_value.get()} - {self.max_value.get()}"
-        )
-        self.value_label.grid(row=5, column=1)
-
-        self.value_slider_min = CTkSlider(
-            slider_container,
-            from_=0,
-            to=100,
-            variable=self.min_value,
-            command=self.update_min_value,
-        )
-        self.value_slider_min.grid(row=0, column=0)
-        self.value_slider_max = CTkSlider(
-            slider_container,
-            from_=0,
-            to=100,
-            variable=self.max_value,
-            command=self.update_max_value,
-        )
-        self.value_slider_max.grid(row=1, column=0)
+        self.weight_slider = CTkDoubleSlider(self, label="Weight", row=4, column=1)
+        self.value_slider = CTkDoubleSlider(self, label="Value", row=5, column=1)
 
         self.create_nodes = CTkButton(
             self, text="Create nodes", command=self.generateNode
@@ -191,34 +138,6 @@ class Interface(CTk):
         self.quit()
         self.destroy()
 
-    def update_min_value(self, val):
-        if int(val) >= self.max_value.get():
-            self.value_slider_min.set(self.max_value.get() - 1)
-        self.value_label.configure(
-            text=f"Value range: {self.min_value.get()} - {self.max_value.get()}"
-        )
-
-    def update_max_value(self, val):
-        if int(val) <= self.min_value.get():
-            self.value_slider_max.set(self.min_value.get() + 1)
-        self.value_label.configure(
-            text=f"Value range: {self.min_value.get()} - {self.max_value.get()}"
-        )
-
-    def update_min_weight(self, val):
-        if int(val) >= self.max_weight.get():
-            self.weight_slider_min.set(self.max_weight.get() - 1)
-        self.weight_label.configure(
-            text=f"Weight range: {self.min_weight.get()} - {self.max_weight.get()}"
-        )
-
-    def update_max_weight(self, val):
-        if int(val) <= self.min_weight.get():
-            self.weight_slider_max.set(self.min_weight.get() + 1)
-        self.weight_label.configure(
-            text=f"Weight range: {self.min_weight.get()} - {self.max_weight.get()}"
-        )
-
     def launchGreedy(self) -> None:
         """ """
         self.final_value = greedy(
@@ -260,8 +179,14 @@ class Interface(CTk):
 
         for index in range(int(self.nodes.get())):
             unique_node = Node(
-                uniform(float(self.min_weight.get()), float(self.max_weight.get())),
-                uniform(float(self.min_value.get()), float(self.max_value.get())),
+                uniform(
+                    float(self.weight_slider.min.get()),
+                    float(self.weight_slider.max.get()),
+                ),
+                uniform(
+                    float(self.value_slider.min.get()),
+                    float(self.value_slider.max.get()),
+                ),
             )
             nodeList.append(unique_node)
 
